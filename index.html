@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mes engagements · Selfty</title>
+<meta name="theme-color" content="#FAEEEE">
+<meta name="apple-mobile-web-app-title" content="Engagements">
+<link rel="icon" href="https://selfty-academy.github.io/console/contrat/favicon-32.png">
+<link rel="apple-touch-icon" href="https://selfty-academy.github.io/console/contrat/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ink:#3A2A2A; --ink-soft:#5C4646; --muted:#8A7070;
+  --paper:#FAEEEE; --surface:#FFFDFB; --card:#F6DFDF; --rose:#F4DDDD; --border:#EBD2D2;
+  --mauve:#966868; --mauve-deep:#7E5252; --lilas:#EAD9EA; --lilas-deep:#6E4A6E;
+  --ok:#4C7A5E; --ok-soft:#E3EEE6; --warn:#A8763B; --danger:#A54848; --danger-soft:#F5DCDC;
+  --rate:#D9B4B4; --passe:#E7D9C3; --pause:#B9C8DE;
+  --r:14px; --shadow:0 1px 2px rgba(58,42,42,.06),0 6px 20px rgba(58,42,42,.05);
+  --nav:calc(64px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+body{background-color:var(--paper);color:var(--ink);font:16px/1.5 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 480px at 88% -120px, rgba(150,104,104,.14), transparent 62%),
+    radial-gradient(760px 460px at -8% 12%, rgba(255,253,251,.75), transparent 60%),
+    radial-gradient(680px 420px at 108% 78%, rgba(234,217,234,.55), transparent 62%);
+  background-attachment:fixed}
+a{color:var(--mauve-deep)}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0}
+input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px calc(var(--nav) + 28px)}
+
+header{display:flex;align-items:center;gap:12px;padding:16px 0 10px}
+header img{height:34px;width:auto;display:block}
+header .titre{flex:1;min-width:0}
+header h1{font:600 22px/1.1 "Playfair Display",Georgia,serif;margin:0}
+header .sub{font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{font-size:11.5px;color:var(--muted);display:inline-flex;align-items:center;gap:5px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+.status.err i{background:var(--danger)}
+.status.busy i{background:var(--warn)}
+.status.local i{background:var(--lilas-deep)}
+.moi{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;color:var(--ink-soft);white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.moi:hover{background:var(--rose)}
+
+.bandeau{background:var(--lilas);border:1px solid #DCC5DC;border-radius:var(--r);padding:10px 14px;margin:0 0 14px;font-size:13.5px;color:var(--lilas-deep)}
+.bandeau b{font-weight:600}
+.bandeau.pause{background:#E6EDF6;border-color:#C9D6E6;color:#3F5B7A}
+
+h2{font:600 19px "Playfair Display",Georgia,serif;margin:18px 0 10px}
+h2 small{font:500 13px "Jost",sans-serif;color:var(--muted);margin-left:6px}
+.intro{color:var(--ink-soft);font-size:14.5px;margin:0 0 14px}
+.sec{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:16px 2px 8px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card.done{opacity:.7}
+.card.fini{opacity:.62}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chip{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+.chip.freq{background:var(--rose);color:var(--mauve-deep)}
+.chip.heure{border:1px solid var(--border);color:var(--ink-soft);font-weight:500}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.pause{background:#E6EDF6;color:#3F5B7A}
+.chip.fini{background:#EFE7E7;color:var(--muted)}
+.chip.attente{background:var(--lilas);color:var(--lilas-deep)}
+.chip.alerte{background:var(--danger-soft);color:var(--danger)}
+.action{font:600 20px/1.25 "Playfair Display",Georgia,serif;margin:2px 0 6px}
+.pourquoi{font-size:14px;color:var(--ink-soft);font-style:italic}
+.preuve{font-size:13px;color:var(--muted);margin-top:3px}
+
+.serie{display:flex;align-items:center;gap:14px;margin:14px 0 10px;padding:12px 14px;background:var(--card);border-radius:12px}
+.serie .n{font:700 34px/1 "Playfair Display",Georgia,serif;color:var(--mauve-deep);display:flex;align-items:baseline;gap:6px}
+.serie .n small{font:500 13px "Jost",sans-serif;color:var(--ink-soft)}
+.serie .d{flex:1;font-size:13px;color:var(--ink-soft);line-height:1.4}
+.serie .d b{color:var(--ink)}
+.pastilles{display:flex;gap:4px;margin:8px 0 4px}
+.pastilles i{flex:1;height:10px;border-radius:4px;background:var(--rose);border:1px solid transparent}
+.p-fait{background:var(--ok)!important}
+.p-rate{background:var(--rate)!important}
+.p-passe{background:var(--passe)!important}
+.p-pause{background:var(--pause)!important}
+.p-attente{background:var(--surface)!important;border-color:var(--mauve)!important}
+.p-avenir,.p-hors{background:#F6EEEE!important;border-color:var(--border)!important}
+.p-hors{border-style:dashed!important}
+.act{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.act .btn{flex:1}
+.act .btn.sm{flex:none}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--mauve);color:#FFFDFB;border-radius:999px;padding:11px 18px;font:500 15px "Jost",sans-serif;transition:.15s;text-decoration:none;border:1px solid var(--mauve)}
+.btn:hover{background:var(--mauve-deep);border-color:var(--mauve-deep)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:var(--surface);color:var(--ink-soft);border-color:var(--border)}
+.btn.ghost:hover{background:var(--rose)}
+.btn.danger{background:var(--surface);color:var(--danger);border-color:#E7C6C6}
+.btn.danger:hover{background:var(--danger-soft)}
+.btn.ink{background:var(--ink);border-color:var(--ink)}
+.btn.okb{background:var(--ok);border-color:var(--ok)}
+.btn.okb:hover{background:#3E6A4F}
+.btn.full{width:100%}
+.btn.sm{padding:8px 13px;font-size:13.5px}
+.btn.lg{padding:15px 20px;font-size:17px;font-weight:600}
+.vide{color:var(--muted);font-size:14.5px;padding:28px 16px;text-align:center;background:rgba(255,253,251,.6);border:1px dashed var(--border);border-radius:var(--r)}
+.vide .big{font-size:34px;margin-bottom:6px}
+
+label.f{display:block;font-weight:500;font-size:13.5px;color:var(--ink-soft);margin:14px 0 6px}
+label.f small{color:var(--muted);font-weight:400}
+.inp{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font:16px "Jost",sans-serif;color:var(--ink);background:var(--surface);outline:none;-webkit-appearance:none;appearance:none;min-height:46px}
+.inp:focus{border-color:var(--mauve);box-shadow:0 0 0 3px rgba(150,104,104,.15)}
+textarea.inp{min-height:72px;resize:vertical}
+.seg{display:flex;background:var(--rose);border-radius:999px;padding:3px}
+.seg button{flex:1;padding:8px 6px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink-soft)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(58,42,42,.12)}
+.jours{display:flex;gap:6px}
+.jours button{flex:1;aspect-ratio:1;max-height:46px;border:1px solid var(--border);background:var(--surface);border-radius:50%;font-weight:600;font-size:14px;color:var(--ink-soft)}
+.jours button.on{background:var(--mauve);border-color:var(--mauve);color:#FFFDFB}
+.quick{display:flex;flex-wrap:wrap;gap:7px}
+.quick button{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:8px 14px;font-size:14px;color:var(--ink-soft)}
+.quick button.on{background:var(--mauve);border-color:var(--mauve);color:#FFFDFB}
+.hint{font-size:12.5px;color:var(--muted);margin-top:6px}
+
+/* grille historique */
+.grille{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);margin-bottom:12px}
+.grille .tete{display:grid;grid-template-columns:64px repeat(7,1fr);gap:6px;font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px}
+.grille .tete span:first-child{text-align:left}
+.grille .sem{display:grid;grid-template-columns:64px repeat(7,1fr);gap:6px;align-items:center;margin-bottom:6px}
+.grille .sem .lbl{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.grille .sem .lbl b{display:block;color:var(--ink-soft);font-weight:500}
+.grille .sem i{display:block;aspect-ratio:1;border-radius:9px;background:var(--rose);border:1px solid transparent;position:relative}
+.grille .sem i.today::after{content:"";position:absolute;inset:-3px;border:2px solid var(--mauve);border-radius:11px}
+.legende{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:6px 4px 0}
+.legende i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+
+/* bilan */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0}
+.stat{background:var(--card);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font:700 22px/1.1 "Playfair Display",Georgia,serif;color:var(--mauve-deep)}
+.stat small{font-size:11.5px;color:var(--ink-soft)}
+.mot{font:italic 500 16px/1.4 "Playfair Display",Georgia,serif;color:var(--ink-soft);margin:10px 0 4px}
+.regles{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px 14px 32px;font-size:14px;color:var(--ink-soft);margin:0}
+.regles li{margin:6px 0}
+
+/* navigation basse */
+nav.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,253,251,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:6px 6px calc(6px + env(safe-area-inset-bottom));display:flex;justify-content:space-around}
+nav.nav button{flex:1;max-width:160px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;border-radius:12px;font-size:11.5px;font-weight:500;color:var(--muted);position:relative}
+nav.nav button .ic{font-size:20px;line-height:1}
+nav.nav button.on{color:var(--mauve-deep);background:var(--rose)}
+nav.nav .bdg{position:absolute;top:0;right:calc(50% - 30px);background:var(--mauve);color:#FFFDFB;border-radius:999px;font-size:10.5px;padding:0 6px;min-width:18px;line-height:17px;text-align:center}
+
+/* accès + identité */
+.gate{max-width:380px;margin:36px auto 0;text-align:center}
+.gate img{height:52px;margin-bottom:14px}
+.gate h2{margin:0 0 6px;font-size:24px}
+.gate p{color:var(--ink-soft);font-size:14.5px;margin:0 0 16px}
+.gate > .inp{text-align:center;font-size:18px;letter-spacing:.06em;margin-bottom:12px}
+.gate .card{text-align:left}
+
+/* modale (feuille basse) */
+.modal{position:fixed;inset:0;background:rgba(58,42,42,.42);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.modal.on{display:flex}
+.sheet{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:560px;padding:18px 18px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:up .2s ease}
+@keyframes up{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}
+@media(min-width:640px){.modal{align-items:center;padding:20px}.sheet{border-radius:22px}}
+.sheet h3{font:600 20px "Playfair Display",Georgia,serif;margin:0 0 4px}
+.sheet .quand{font-size:15px;color:var(--ink-soft);margin-bottom:12px}
+.recap{background:var(--card);border-radius:12px;padding:12px 14px;font-size:14px;margin:10px 0}
+.recap div{padding:3px 0;display:flex;gap:8px}
+.recap b{color:var(--muted);font-weight:500;min-width:84px;flex:none}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.row .btn{flex:1}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav) + 14px);transform:translateX(-50%) translateY(12px);background:var(--ink);color:#FFFDFB;border-radius:999px;padding:11px 18px;font-size:14px;z-index:60;opacity:0;transition:.22s;pointer-events:none;max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.toast.err{background:var(--danger)}
+.toast.ok{background:var(--ok)}
+.mini{font-size:13px;color:var(--muted)}
+.fete{text-align:center;padding:10px 0 4px}
+.fete .big{font:700 44px/1 "Playfair Display",Georgia,serif;color:var(--mauve-deep)}
+.fete .big small{font:500 15px "Jost",sans-serif;color:var(--ink-soft);margin-left:6px}
+.fete p{margin:8px 0 0;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="https://selfty-academy.github.io/console/contrat/logo.png" alt="Selfty Academy">
+    <div class="titre">
+      <h1>Mes engagements</h1>
+      <div class="sub"><span class="status" id="status"><i></i><span id="status-t">…</span></span></div>
+    </div>
+    <button class="moi" id="moi" onclick="editMe()" hidden></button>
+  </header>
+  <div id="app"></div>
+</div>
+<nav class="nav" id="nav" hidden></nav>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------- config ----------
+const PONT = 'https://script.google.com/macros/s/AKfycbwROj9t1ce54CnwjVJ7piRzVhqug2eKzyjy8y3BhvpJcKDrXHEIF_YmZQ169cgw1zc/exec';                     // URL /exec du pont Apps Script (remplie au déploiement)
+const KEY = 'engagements-e1f019f1c9cbf72a9e75b5b8';
+const PAGE_URL = 'https://selfty-academy.github.io/engagements/';
+const CODE = 'selfty2026';                     // code d'accès de l'école (comparé en minuscules)
+const Q = new URLSearchParams(location.search);
+const LOCAL = !PONT || PONT.startsWith('__') || Q.get('local') === '1';   // mode test : tout reste sur ce téléphone
+const HEURES = [6, 7, 8, 9, 10, 12, 13, 14, 17, 18, 19, 20, 21, 22];
+const PAUSE_MAX = 2, PAUSE_MAX_JOURS = 7;
+const JOURS_ISO = ['', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+const JOURS_COURT = ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'];
+
+// ---------- état ----------
+let S = { engagements: [], faits: [] };
+let me = null; try { me = JSON.parse(localStorage.getItem('se_me') || 'null'); } catch (_) { }
+let okCode = false; try { okCode = localStorage.getItem('se_ok') === '1'; } catch (_) { }
+let tab = (location.hash || '').replace('#', '') || 'today';
+let draft = { frequence: 'quotidien', jours: [1, 2, 3, 4, 5, 6, 7], heure: 7, action: '', pourquoi: '', preuve: '' };
+let busy = false;
+
+// ---------- utils ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = n => String(n).padStart(2, '0');
+function isoDate(d = new Date()) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+const TODAY = () => isoDate();
+function addDays(iso, n) { const d = new Date(String(iso).slice(0, 10) + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+function isoDow(iso) { const d = new Date(String(iso).slice(0, 10) + 'T12:00:00Z').getUTCDay(); return d === 0 ? 7 : d; }
+function weekStart(iso) { return addDays(iso, 1 - isoDow(iso)); }
+function fmtDate(iso, opts) { return new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', opts || { weekday: 'long', day: 'numeric', month: 'long' }); }
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+function hFr(h) { return String(h).slice(0, 5).replace(':00', 'h').replace(':', 'h'); }
+function toast(msg, cls) { const t = $('#toast'); t.textContent = msg; t.className = 'toast on' + (cls ? ' ' + cls : ''); clearTimeout(t._h); t._h = setTimeout(() => t.className = 'toast', 3200); }
+function setStatus(txt, cls) { $('#status').className = 'status ' + (cls || ''); $('#status-t').textContent = txt; }
+const validEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s || '').trim());
+const plural = (n, u, p) => n + ' ' + (n > 1 ? (p || u + 's') : u);
+
+// ---------- calcul des séries (même logique que le pont) ----------
+function joursSet(e) { if (e.frequence === 'quotidien') return [1, 2, 3, 4, 5, 6, 7]; return String(e.jours || '').split(',').map(Number).filter(n => n >= 1 && n <= 7); }
+function scheduled(e, d) { if (d < e.debut) return false; if (e.fin && d > e.fin) return false; return joursSet(e).includes(isoDow(d)); }
+function etatMap(e, faits) {
+  const m = {}; const jour = joursSet(e)[0] || 7;
+  faits.forEach(f => {
+    let d = String(f.date).slice(0, 10);
+    if (e.frequence === 'hebdo') d = addDays(weekStart(d), jour - 1);
+    const v = String(f.fait);
+    if (m[d] === 'oui') return;
+    if (v === 'oui' || !m[d] || (v === 'pause' && m[d] === 'non')) m[d] = v;
+  });
+  return m;
+}
+function calc(e, faits, ref) {
+  const m = etatMap(e, faits);
+  const st = d => !scheduled(e, d) ? 'hors' : m[d] === 'oui' ? 'fait' : m[d] === 'pause' ? 'pause' : m[d] === 'non' ? 'passe' : d > ref ? 'avenir' : d === ref ? 'attente' : 'rate';
+  let serie = 0, d, guard = 0;
+  if (st(ref) === 'fait') serie++;
+  d = addDays(ref, -1);
+  while (guard++ < 400 && d >= e.debut) { const s = st(d); if (s === 'fait') serie++; else if (s === 'rate') break; d = addDays(d, -1); }
+  let record = 0, run = 0, done28 = 0, total28 = 0;
+  const lim28 = addDays(ref, -27);
+  for (let x = e.debut, g = 0; x <= ref && g < 400; x = addDays(x, 1), g++) {
+    const s = st(x);
+    if (s === 'fait') { run++; if (run > record) record = run; } else if (s === 'rate') run = 0;
+    if (x >= lim28 && (s === 'fait' || s === 'rate' || s === 'passe')) { total28++; if (s === 'fait') done28++; }
+  }
+  let manques = 0; d = addDays(ref, -1); guard = 0;
+  while (guard++ < 400 && d >= e.debut) { const s = st(d); if (s === 'rate') manques++; else if (s !== 'hors' && s !== 'avenir') break; d = addDays(d, -1); }
+  const notes = {}; faits.forEach(f => { if (f.note) notes[String(f.date).slice(0, 10)] = f.note; });
+  return { serie, record: Math.max(record, serie), manques, done28, total28, pending: st(ref) === 'attente', today: st(ref), st, notes };
+}
+function unite(e, n) { return e.frequence === 'hebdo' ? (n > 1 ? 'semaines' : 'semaine') : (n > 1 ? 'jours' : 'jour'); }
+function freqTxt(e) {
+  const j = joursSet(e);
+  if (e.frequence === 'quotidien' || j.length === 7) return 'Tous les jours';
+  if (e.frequence === 'hebdo') return 'Chaque ' + JOURS_ISO[j[0] || 7];
+  if (j.join() === '1,2,3,4,5') return 'Du lundi au vendredi';
+  return j.map(n => JOURS_COURT[n]).join(' ');
+}
+function prochain(e, from) { for (let i = 0; i < 8; i++) { const d = addDays(from, i); if (scheduled(e, d)) return d; } return null; }
+function phraseSerie(n, record, e) {
+  if (n === 0) return "Aujourd'hui, tu commences. Le jour 1 est le seul qui ne dépend que de toi.";
+  if (n >= 30 && e.frequence !== 'hebdo') return "Un mois. Ce n'est plus une action, c'est qui tu es.";
+  if (n === record) return "C'est ton record. Demain, tu le dépasses.";
+  if (n % 7 === 0 && e.frequence !== 'hebdo') return n + ' jours. Une semaine de plus que celle que tu croyais possible.';
+  if (n <= 6) return 'Les premiers ' + unite(e, 2) + ' sont les plus chers. Tiens.';
+  return n + ' ' + unite(e, n) + '. Tu tiens. Continue.';
+}
+const faitsDe = id => S.faits.filter(f => String(f.id) === String(id));
+const byId = id => S.engagements.find(e => e.id === id);
+
+// ---------- pont / mode local ----------
+async function api(what, payload = {}) {
+  if (LOCAL) return localApi(what, payload);
+  const r = await fetch(PONT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ key: KEY, what, ...payload }) });
+  let j; try { j = await r.json(); } catch (_) { throw new Error('le pont ne répond pas correctement'); }
+  if (!j.ok) throw new Error(j.error || 'erreur pont');
+  return j;
+}
+
+// Mode local (page ouverte sans pont, ou ?local=1) : même logique que le pont, dans localStorage de ce navigateur
+function localApi(what, p) {
+  let db = { engagements: [], faits: [] }; try { db = JSON.parse(localStorage.getItem('se_local') || 'null') || db; } catch (_) { }
+  const save = () => localStorage.setItem('se_local', JSON.stringify(db));
+  const email = String(p.email || '').trim().toLowerCase();
+  const t = TODAY(), stamp = new Date().toISOString();
+  if (what === 'list') return { ok: true, today: t, engagements: db.engagements.filter(e => e.email === email).map(e => ({ ...e, email: undefined })), faits: db.faits };
+  if (what === 'declare') {
+    const kind = f => f === 'hebdo' ? 'hebdo' : 'jour';
+    let remplace = '';
+    db.engagements.filter(e => e.email === email && e.statut !== 'terminé' && kind(e.frequence) === kind(p.frequence)).forEach(e => { e.statut = 'terminé'; e.fin = t; remplace = e.action; });
+    const id = 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const e = { id, created: stamp, prenom: p.prenom, email, action: p.action, frequence: p.frequence, jours: p.jours, heure: p.heure, pourquoi: p.pourquoi || '', preuve: p.preuve || '', statut: 'actif', pause_du: '', pause_jusqu: '', pauses: 0, debut: t, fin: '' };
+    db.engagements.push(e); save(); return { ok: true, id, remplace, mail: false };
+  }
+  const e = db.engagements.find(x => x.id === p.id && x.email === email);
+  if (!e) throw new Error('engagement introuvable');
+  const write = (d, val, note) => {
+    const ex = db.faits.filter(f => f.id === e.id && f.date === d);
+    if (ex.find(f => f.fait === 'oui')) { if (note) ex[0].note = note; return false; }
+    if (ex.length && val !== 'oui') return false;
+    if (ex.length) { ex[0].fait = 'oui'; ex[0].note = note || ex[0].note; return true; }
+    db.faits.push({ date: d, id: e.id, fait: val, at: stamp, source: 'page', note: note || '' }); return true;
+  };
+  if (what === 'done') { const d = p.d || t; const neuf = write(d, 'oui', p.note); save(); const c = calc(e, db.faits.filter(f => f.id === e.id), t); return { ok: true, d, neuf, serie: c.serie, record: c.record }; }
+  if (what === 'skip') { write(p.d || t, 'non', ''); save(); return { ok: true }; }
+  if (what === 'pause') {
+    if (e.statut === 'pause') return { ok: true, deja: true };
+    if ((e.pauses || 0) >= PAUSE_MAX) throw new Error('Tu as déjà utilisé tes ' + PAUSE_MAX + ' pauses sur le programme.');
+    const n = Math.min(PAUSE_MAX_JOURS, Math.max(1, Number(p.jours) || 1));
+    for (let i = 0; i < n; i++) write(addDays(t, i), 'pause', '');
+    Object.assign(e, { statut: 'pause', pause_du: t, pause_jusqu: addDays(t, n - 1), pauses: (e.pauses || 0) + 1 }); save(); return { ok: true, jusqu: e.pause_jusqu };
+  }
+  if (what === 'resume') { db.faits = db.faits.filter(f => !(f.id === e.id && f.fait === 'pause' && f.date >= t)); e.statut = 'actif'; e.pause_jusqu = addDays(t, -1); save(); return { ok: true }; }
+  if (what === 'stop') { e.statut = 'terminé'; e.fin = t; save(); return { ok: true }; }
+  throw new Error('action inconnue');
+}
+
+// Démo locale (?local=1&demo=1) : un engagement avec 12 jours d'historique
+function seedDemo() {
+  if (!LOCAL || Q.get('demo') !== '1' || !me) return;
+  let db = null; try { db = JSON.parse(localStorage.getItem('se_local') || 'null'); } catch (_) { }
+  if (db && db.engagements.length) return;
+  const t = TODAY();
+  const e = { id: 'demo1', created: '', prenom: me.prenom, email: me.email, action: '20 minutes de prospection', frequence: 'quotidien', jours: '1,2,3,4,5,6,7', heure: '07:00', pourquoi: 'Parce que mes premières clientes ne viendront pas toutes seules', preuve: 'Les messages envoyés', statut: 'actif', pause_du: '', pause_jusqu: '', pauses: 0, debut: addDays(t, -12), fin: '' };
+  const h = { id: 'demo2', created: '', prenom: me.prenom, email: me.email, action: 'Publier mon post de la semaine', frequence: 'hebdo', jours: '5', heure: '18:00', pourquoi: 'Être visible chaque semaine', preuve: 'Le lien du post', statut: 'actif', pause_du: '', pause_jusqu: '', pauses: 0, debut: addDays(t, -12), fin: '' };
+  const faits = [];
+  [12, 11, 10, 9, 8, 6, 5, 4, 3, 2, 1].forEach(n => faits.push({ date: addDays(t, -n), id: 'demo1', fait: n === 7 ? 'non' : 'oui', at: '', source: 'page', note: n === 3 ? '4 messages envoyés' : '' }));
+  faits.push({ date: addDays(t, -8), id: 'demo2', fait: 'oui', at: '', source: 'page', note: '' });
+  localStorage.setItem('se_local', JSON.stringify({ engagements: [e, h], faits }));
+}
+
+async function load(silent) {
+  if (!silent) setStatus('chargement…', 'busy');
+  try {
+    const j = await api('list', { email: me && me.email });
+    S.engagements = (j.engagements || []).map(norm);
+    S.faits = (j.faits || []).map(f => ({ date: String(f.date).slice(0, 10), id: String(f.id), fait: String(f.fait), note: f.note || '' }));
+    try { localStorage.setItem('se_cache', JSON.stringify(S)); } catch (_) { }
+    if (LOCAL) setStatus('mode test local', 'local');
+    else setStatus('en direct · ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }));
+  } catch (e) {
+    try { const c = localStorage.getItem('se_cache'); if (c) S = JSON.parse(c); } catch (_) { }
+    setStatus('hors ligne · copie locale', 'err');
+  }
+  render();
+}
+function norm(e) { e.id = String(e.id); e.debut = String(e.debut || '').slice(0, 10); e.fin = String(e.fin || '').slice(0, 10); e.heure = String(e.heure || '07:00').slice(0, 5); e.jours = String(e.jours || ''); e.pauses = Number(e.pauses) || 0; e.pause_jusqu = String(e.pause_jusqu || '').slice(0, 10); return e; }
+const actifs = () => S.engagements.filter(e => e.statut === 'actif' || e.statut === 'pause').sort((a, b) => (a.frequence === 'hebdo') - (b.frequence === 'hebdo'));
+const termines = () => S.engagements.filter(e => e.statut === 'terminé').sort((a, b) => (b.fin || '').localeCompare(a.fin || ''));
+
+// ---------- rendu ----------
+function render() {
+  const app = $('#app');
+  $('#nav').hidden = !(okCode && me);
+  $('#moi').hidden = !(okCode && me);
+  if (!okCode) { app.innerHTML = renderGate(); $('#code') && $('#code').focus(); return; }
+  if (!me) { app.innerHTML = renderIdentity(); return; }
+  $('#moi').textContent = me.prenom;
+  renderNav();
+  let html = LOCAL ? '<div class="bandeau"><b>Mode test local :</b> tes engagements restent sur ce téléphone et aucun mail ne part.</div>' : '';
+  if (tab === 'histo') html += renderHisto();
+  else if (tab === 'bilan') html += renderBilan();
+  else if (tab === 'new') html += renderNew();
+  else html += renderToday();
+  app.innerHTML = html;
+  if (tab === 'new') bindForm();
+}
+
+function renderGate() {
+  return `<div class="gate">
+    <img src="https://selfty-academy.github.io/console/contrat/logo.png" alt="Selfty Academy">
+    <h2>Mes engagements</h2>
+    <p>Déclare ton action, reçois ton rappel à ton heure, clique « Fait », regarde ta série grandir. Entre le code de l'école pour continuer.</p>
+    <input class="inp" id="code" placeholder="Code de l'école" autocomplete="off" autocapitalize="off" onkeydown="if(event.key==='Enter')checkCode()">
+    <button class="btn full lg" onclick="checkCode()">Entrer</button>
+  </div>`;
+}
+function checkCode() {
+  if ($('#code').value.trim().toLowerCase() === CODE) { okCode = true; try { localStorage.setItem('se_ok', '1'); } catch (_) { } render(); }
+  else toast('Ce code ne correspond pas', 'err');
+}
+function renderIdentity(edit) {
+  const m = me || { prenom: '', email: '', whatsapp: '' };
+  return `<div class="gate">
+    <h2>${edit ? 'Tes infos' : 'Bienvenue'}</h2>
+    <p>Ton e-mail reçoit tes rappels à l'heure que tu choisis. Ton WhatsApp sert à Anaïs pour t'écrire si tu décroches.</p>
+    <div class="card">
+      <label class="f">Ton prénom</label>
+      <input class="inp" id="me-prenom" value="${esc(m.prenom)}" autocomplete="given-name" placeholder="Prénom">
+      <label class="f">Ton e-mail</label>
+      <input class="inp" id="me-email" type="email" value="${esc(m.email)}" autocomplete="email" inputmode="email" placeholder="prenom@exemple.fr">
+      <label class="f">Ton WhatsApp <small>(facultatif)</small></label>
+      <input class="inp" id="me-wa" type="tel" value="${esc(m.whatsapp || '')}" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" onkeydown="if(event.key==='Enter')saveMe()">
+      <div class="act"><button class="btn full lg" onclick="saveMe()">${edit ? 'Enregistrer' : "C'est parti"}</button></div>
+      ${edit ? '<div class="act"><button class="btn ghost full" onclick="closeModal()">Annuler</button></div>' : ''}
+    </div>
+  </div>`;
+}
+function saveMe() {
+  const prenom = $('#me-prenom').value.trim().replace(/\s+/g, ' ').slice(0, 40), email = $('#me-email').value.trim().toLowerCase(), whatsapp = $('#me-wa').value.trim();
+  if (!prenom) return toast('Indique ton prénom', 'err');
+  if (!validEmail(email)) return toast('Cet e-mail ne semble pas valide', 'err');
+  me = { prenom, email, whatsapp };
+  try { localStorage.setItem('se_me', JSON.stringify(me)); } catch (_) { }
+  closeModal();
+  seedDemo();
+  load();
+}
+function editMe() { openSheet(renderIdentity(true)); }
+
+function renderNav() {
+  const t = TODAY();
+  const todo = actifs().filter(e => e.statut === 'actif' && calc(e, faitsDe(e.id), t).pending).length;
+  $('#nav').innerHTML = [['today', '🔥', "Aujourd'hui", todo], ['histo', '📆', 'Historique', 0], ['bilan', '🌸', 'Bilan', 0], ['new', '➕', 'Déclarer', 0]]
+    .map(([k, ic, l, n]) => `<button class="${tab === k ? 'on' : ''}" onclick="go('${k}')"><span class="ic">${ic}</span>${l}${n ? `<span class="bdg">${n}</span>` : ''}</button>`).join('');
+}
+function go(t) { tab = t; history.replaceState(null, '', '#' + t); window.scrollTo(0, 0); render(); }
+
+// ---- aujourd'hui ----
+function pastilles(e, c, t, n) {
+  let h = '<div class="pastilles">';
+  for (let i = n - 1; i >= 0; i--) { const d = addDays(t, -i); h += `<i class="p-${c.st(d)}" title="${fmtDate(d, { weekday: 'short', day: 'numeric' })}"></i>`; }
+  return h + '</div>';
+}
+function renderToday() {
+  const t = TODAY(), list = actifs();
+  let html = `<p class="intro">${cap(fmtDate(t))}. ${list.length ? 'Ce que tu as dit que tu ferais :' : ''}</p>`;
+  if (!list.length) return html + `<div class="vide"><div class="big">🌱</div>Aucun engagement pour l'instant.<br>Ce qui n'est pas déclaré n'existe pas.<div class="act" style="justify-content:center"><button class="btn" onclick="go('new')">Déclarer mon premier engagement</button></div></div>`;
+  list.forEach(e => { html += engCard(e, t); });
+  return html;
+}
+function engCard(e, t) {
+  const c = calc(e, faitsDe(e.id), t);
+  const hebdo = e.frequence === 'hebdo';
+  const y = addDays(t, -1);
+  const enPause = e.statut === 'pause';
+  let etat = '';
+  if (enPause) etat = `<span class="chip pause">en pause jusqu'au ${fmtDate(e.pause_jusqu, { day: 'numeric', month: 'long' })}</span>`;
+  else if (c.today === 'fait') etat = `<span class="chip ok">fait ${hebdo ? 'cette semaine' : "aujourd'hui"} ✓</span>`;
+  else if (c.today === 'passe') etat = `<span class="chip fini">pas aujourd'hui</span>`;
+  else if (c.today === 'attente') etat = `<span class="chip attente">à faire ${hebdo ? 'cette semaine' : "aujourd'hui"}</span>`;
+  else if (hebdo && weekHebdoDone(e, c, t)) etat = `<span class="chip ok">fait cette semaine ✓</span>`;
+  else if (hebdo) etat = `<span class="chip attente">à faire avant ${JOURS_ISO[joursSet(e)[0]]}</span>`;
+  else { const p = prochain(e, t); etat = `<span class="chip fini">pas prévu aujourd'hui${p ? ' · prochain : ' + fmtDate(p, { weekday: 'long' }) : ''}</span>`; }
+  if (c.manques >= 2 && !enPause) etat += `<span class="chip alerte">${plural(c.manques, unite(e, 1), unite(e, 2))} sans « Fait »</span>`;
+  const taux = c.total28 ? Math.round(100 * c.done28 / c.total28) : null;
+  let boutons = '';
+  if (enPause) boutons = `<button class="btn ghost" onclick="act('resume','${e.id}')">Reprendre maintenant</button>`;
+  else if (hebdo) {
+    const done = weekHebdoDone(e, c, t);
+    boutons = done ? `<button class="btn okb" disabled>C'est fait pour cette semaine ✓</button>` : `<button class="btn lg" onclick="fait('${e.id}','${t}')">Fait cette semaine ✓</button>`;
+  } else if (c.today === 'attente') boutons = `<button class="btn lg" onclick="fait('${e.id}','${t}')">Fait aujourd'hui ✓</button>`;
+  else if (c.today === 'fait') boutons = `<button class="btn okb" disabled>C'est fait pour aujourd'hui ✓</button>`;
+  else if (c.today === 'passe') boutons = `<button class="btn ghost" onclick="fait('${e.id}','${t}')">Finalement, c'est fait ✓</button>`;
+  let second = '';
+  if (!enPause && !hebdo && c.st(y) === 'rate') second += `<button class="btn ghost sm" onclick="fait('${e.id}','${y}')">Fait hier (avant minuit)</button>`;
+  if (!enPause && c.today === 'attente') second += `<button class="btn ghost sm" onclick="skip('${e.id}')">Pas aujourd'hui</button>`;
+  second += `<button class="btn ghost sm" onclick="details('${e.id}')">Détails</button>`;
+  return `<div class="card ${c.today === 'fait' ? 'done' : ''}">
+    <div class="chips"><span class="chip freq">${freqTxt(e)}</span><span class="chip heure">rappel ${hFr(e.heure)}</span>${etat}</div>
+    <div class="action">${esc(e.action)}</div>
+    ${e.pourquoi ? `<div class="pourquoi">« ${esc(e.pourquoi)} »</div>` : ''}
+    ${e.preuve ? `<div class="preuve">Preuve : ${esc(e.preuve)}</div>` : ''}
+    <div class="serie">
+      <div class="n">${c.serie}<small>${unite(e, c.serie)}</small></div>
+      <div class="d">Série en cours${c.serie ? '' : ' : à toi de jouer'}<br>record <b>${c.record}</b>${taux !== null ? ` · <b>${taux} %</b> sur 4 semaines` : ''}</div>
+    </div>
+    ${pastilles(e, c, t, hebdo ? 28 : 14)}
+    <div class="act">${boutons}</div>
+    ${second ? `<div class="act">${second}</div>` : ''}
+  </div>`;
+}
+function weekHebdoDone(e, c, t) { const jour = joursSet(e)[0] || 7; return c.st(addDays(weekStart(t), jour - 1)) === 'fait'; }
+
+async function fait(id, d) {
+  if (busy) return; busy = true;
+  const e = byId(id);
+  try {
+    const r = await api('done', { id, email: me.email, d });
+    await load(true);
+    const c = calc(byId(id), faitsDe(id), TODAY());
+    openSheet(`<div class="fete"><div class="big">${c.serie}<small>${unite(e, c.serie)}</small></div><p>${esc(phraseSerie(c.serie, c.record, e))}</p></div>
+      <label class="f">${e.preuve ? 'Ta preuve : ' + esc(e.preuve) : "Un mot sur aujourd'hui"} <small>(facultatif)</small></label>
+      <input class="inp" id="note" maxlength="200" placeholder="En un mot…" onkeydown="if(event.key==='Enter')noter('${id}','${d}')">
+      <div class="row"><button class="btn ghost" onclick="closeModal()">Plus tard</button><button class="btn" onclick="noter('${id}','${d}')">Noter</button></div>`);
+    setTimeout(() => $('#note') && $('#note').focus(), 250);
+  } catch (err) { toast(err.message, 'err'); }
+  busy = false;
+}
+async function noter(id, d) {
+  const note = ($('#note').value || '').trim();
+  closeModal();
+  if (!note) return;
+  try { await api('done', { id, email: me.email, d, note }); await load(true); toast('C\'est noté', 'ok'); } catch (err) { toast(err.message, 'err'); }
+}
+async function skip(id) {
+  if (!confirm('Pas aujourd\'hui ? Dit à temps, ça ne coûte que le jour : ta série reste.')) return;
+  try { await api('skip', { id, email: me.email }); await load(true); toast('Noté, merci de l\'avoir dit'); } catch (err) { toast(err.message, 'err'); }
+}
+async function act(what, id, extra) {
+  if (busy) return; busy = true;
+  try { await api(what, { id, email: me.email, ...(extra || {}) }); closeModal(); await load(true); toast({ resume: 'Engagement repris', stop: 'Engagement terminé', pause: 'Pause posée' }[what] || 'OK'); }
+  catch (err) { toast(err.message, 'err'); }
+  busy = false;
+}
+function details(id) {
+  const e = byId(id), t = TODAY(), c = calc(e, faitsDe(id), t);
+  const restantes = PAUSE_MAX - (e.pauses || 0);
+  openSheet(`<h3>${esc(e.action)}</h3>
+    <div class="quand">${freqTxt(e)} · rappel à ${hFr(e.heure)} · depuis le ${fmtDate(e.debut, { day: 'numeric', month: 'long' })}</div>
+    <div class="recap">
+      ${e.pourquoi ? `<div><b>Pourquoi</b><span>${esc(e.pourquoi)}</span></div>` : ''}
+      ${e.preuve ? `<div><b>Preuve</b><span>${esc(e.preuve)}</span></div>` : ''}
+      <div><b>Série</b><span>${c.serie} ${unite(e, c.serie)} · record ${c.record}</span></div>
+      <div><b>4 semaines</b><span>${c.done28} sur ${c.total28}</span></div>
+      <div><b>Pauses</b><span>${restantes > 0 ? restantes + ' restante' + (restantes > 1 ? 's' : '') + ' sur ' + PAUSE_MAX : 'plus aucune'}</span></div>
+    </div>
+    ${e.statut === 'pause' ? `<div class="bandeau pause">En pause jusqu'au ${fmtDate(e.pause_jusqu)}. Une pause déclarée ne casse pas ta série.</div><div class="row"><button class="btn" onclick="act('resume','${id}')">Reprendre maintenant</button></div>`
+      : `<label class="f">Mettre en pause <small>(à partir d'aujourd'hui, 7 jours max)</small></label>
+      <div class="quick" id="pause-jours">${[1, 2, 3, 4, 5, 6, 7].map(n => `<button ${restantes <= 0 ? 'disabled' : ''} onclick="pauseFlow('${id}',${n})">${n} j</button>`).join('')}</div>
+      <p class="hint">Une pause se déclare avant, pas après. Le silence, lui, casse la série.</p>`}
+    <div class="row"><button class="btn danger" onclick="stopFlow('${id}')">Arrêter cet engagement</button><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+}
+function pauseFlow(id, n) { if (confirm('Mettre en pause ' + n + ' jour' + (n > 1 ? 's' : '') + ' à partir d\'aujourd\'hui ?')) act('pause', id, { jours: n }); }
+function stopFlow(id) { if (confirm('Arrêter cet engagement ? Il reste dans ton historique. Tu peux en déclarer un nouveau ensuite.')) act('stop', id); }
+
+// ---- historique 4 semaines ----
+function renderHisto() {
+  const t = TODAY();
+  const list = actifs().concat(termines().filter(e => e.fin && e.fin >= addDays(t, -28)));
+  let html = `<p class="intro">Les 4 dernières semaines, jour par jour. Touche une case pour voir ta note.</p>`;
+  if (!list.length) return html + `<div class="vide"><div class="big">📆</div>Rien à montrer encore.</div>`;
+  list.forEach(e => {
+    const c = calc(e, faitsDe(e.id), t);
+    const start = addDays(weekStart(t), -21);
+    let g = `<div class="grille"><div class="chips"><span class="chip freq">${freqTxt(e)}</span>${e.statut === 'terminé' ? '<span class="chip fini">terminé</span>' : ''}</div>
+      <div class="action" style="font-size:17px">${esc(e.action)}</div>
+      <div class="mini" style="margin:2px 0 10px">Série ${c.serie} · record ${c.record}${c.total28 ? ' · ' + Math.round(100 * c.done28 / c.total28) + ' % sur 4 semaines' : ''}</div>
+      <div class="tete"><span></span>${JOURS_COURT.slice(1).map(x => `<span>${x}</span>`).join('')}</div>`;
+    for (let w = 0; w < 4; w++) {
+      const ws = addDays(start, w * 7);
+      g += `<div class="sem"><span class="lbl"><b>${w === 3 ? 'cette sem.' : w === 2 ? 'sem. dern.' : 'sem. du'}</b>${fmtDate(ws, { day: 'numeric', month: 'short' })}</span>`;
+      for (let i = 0; i < 7; i++) { const d = addDays(ws, i), s = c.st(d), n = c.notes[d]; g += `<i class="p-${s} ${d === t ? 'today' : ''}" title="${fmtDate(d, { weekday: 'short', day: 'numeric', month: 'short' })}${n ? ' · ' + esc(n) : ''}" onclick="cellInfo('${d}','${s}',${n ? JSON.stringify(n).replace(/"/g, '&quot;') : 'null'})"></i>`; }
+      g += '</div>';
+    }
+    g += `<div class="legende"><span><i style="background:var(--ok)"></i>fait</span><span><i style="background:var(--rate)"></i>manqué</span><span><i style="background:var(--passe)"></i>pas ce jour-là</span><span><i style="background:var(--pause)"></i>pause</span><span><i style="background:#F6EEEE;border:1px dashed var(--border)"></i>pas prévu</span></div></div>`;
+    html += g;
+  });
+  const anciens = termines().filter(e => !(e.fin && e.fin >= addDays(t, -28)));
+  if (anciens.length) html += `<div class="sec">Anciens engagements</div>` + anciens.map(e => `<div class="card fini"><div class="chips"><span class="chip fini">terminé le ${fmtDate(e.fin, { day: 'numeric', month: 'short' })}</span></div><div class="action" style="font-size:16px">${esc(e.action)}</div></div>`).join('');
+  return html;
+}
+function cellInfo(d, s, note) {
+  const txt = { fait: 'fait ✓', rate: 'manqué', passe: 'pas ce jour-là', pause: 'pause', attente: 'en attente', avenir: 'à venir', hors: 'pas prévu' }[s] || s;
+  toast(cap(fmtDate(d, { weekday: 'long', day: 'numeric', month: 'long' })) + ' : ' + txt + (note ? ' · « ' + note + ' »' : ''));
+}
+
+// ---- bilan de la semaine ----
+function semaineStats(e, c, ws, jusqu) {
+  let x = 0, y = 0;
+  for (let d = ws; d <= jusqu && d < addDays(ws, 7); d = addDays(d, 1)) { const s = c.st(d); if (s === 'fait') { x++; y++; } else if (s === 'rate' || s === 'passe') y++; }
+  return { x, y };
+}
+function renderBilan() {
+  const t = TODAY(), list = actifs();
+  const ws = weekStart(t), wsPrev = addDays(ws, -7);
+  let html = `<p class="intro">Semaine du ${fmtDate(ws, { day: 'numeric', month: 'long' })}, de lundi à ${fmtDate(t, { weekday: 'long' })}.</p>`;
+  if (!list.length) html += `<div class="vide"><div class="big">🌸</div>Déclare un engagement pour avoir un bilan.</div>`;
+  let totalX = 0, totalY = 0;
+  list.forEach(e => {
+    const c = calc(e, faitsDe(e.id), t);
+    const now = semaineStats(e, c, ws, t), prev = semaineStats(e, c, wsPrev, addDays(wsPrev, 6));
+    totalX += now.x; totalY += now.y;
+    const hebdo = e.frequence === 'hebdo';
+    const delta = prev.y ? (now.x - prev.x) : null;
+    html += `<div class="card">
+      <div class="chips"><span class="chip freq">${freqTxt(e)}</span>${e.statut === 'pause' ? '<span class="chip pause">en pause</span>' : ''}</div>
+      <div class="action" style="font-size:18px">${esc(e.action)}</div>
+      <div class="stats">
+        <div class="stat"><b>${hebdo ? (now.x ? 'faite' : 'à faire') : now.x + '/' + now.y}</b><small>${hebdo ? 'cette semaine' : 'jours cette semaine'}</small></div>
+        <div class="stat"><b>${c.serie}</b><small>${unite(e, c.serie)} d'affilée</small></div>
+        <div class="stat"><b>${hebdo ? (prev.x ? 'faite' : 'non') : prev.x + '/' + prev.y}</b><small>semaine dernière</small></div>
+      </div>
+      <div class="mot">${esc(motBilan(e, c, now, prev))}</div>
+      ${pastilles(e, c, t, 7)}
+    </div>`;
+  });
+  if (list.length) {
+    const taux = totalY ? Math.round(100 * totalX / totalY) : null;
+    html += `<div class="card" style="background:var(--card)"><div class="action" style="font-size:17px">Ta semaine en un chiffre</div><div class="mini">${taux !== null ? `<b style="color:var(--mauve-deep);font-size:22px">${taux} %</b> de ce que tu avais dit, tu l'as fait.` : 'Rien encore à compter cette semaine.'} Le bilan du vendredi (formulaire) te demandera pourquoi pour les jours manqués.</div></div>`;
+  }
+  html += `<div class="sec">Les règles du jeu</div><ol class="regles">
+    <li>Un engagement quotidien, un hebdo. Pas plus. Petit et tenu vaut mieux que grand et rêvé.</li>
+    <li>Le « Fait » du jour est valable jusqu'au lendemain minuit.</li>
+    <li>Une pause se déclare avant, 7 jours max, 2 fois sur le programme. Une pause n'est pas une casse.</li>
+    <li>« Pas aujourd'hui » dit à temps ne coûte que le jour ; le silence coûte la série et un message d'Anaïs.</li>
+    <li>À 2 jours de silence, Anaïs t'écrit. Ce n'est pas une punition, c'est le contrat.</li>
+    <li>Le bilan du vendredi se rend avant dimanche soir. C'est aussi une condition de la garantie.</li>
+    <li>Tu peux changer d'engagement quand tu veux, en le redéclarant. L'ancien reste dans ton historique.</li>
+    <li>Rien de ce que tu écris n'est montré sans ton accord.</li>
+  </ol>`;
+  return html;
+}
+function motBilan(e, c, now, prev) {
+  if (e.frequence === 'hebdo') return now.x ? 'Fait. Une semaine de plus où tu as tenu parole.' : 'Pas encore faite cette semaine : quel jour, concrètement ?';
+  if (!now.y) return 'La semaine commence. Le jour 1 ne dépend que de toi.';
+  if (now.x === now.y) return now.y >= 5 ? 'Sans faute. Ce n\'est plus une action, c\'est qui tu es.' : 'Sans faute pour l\'instant. Tiens.';
+  if (prev.y && now.x > prev.x) return 'Mieux que la semaine dernière. C\'est ça, la direction.';
+  if (c.manques >= 2) return c.manques + ' jours de silence. Un seul « Fait » aujourd\'hui remet tout en route.';
+  return (now.y - now.x) + ' jour' + (now.y - now.x > 1 ? 's' : '') + ' manqué' + (now.y - now.x > 1 ? 's' : '') + '. Qu\'est-ce qui s\'est passé ce jour-là ?';
+}
+
+// ---- déclarer ----
+function renderNew() {
+  const kind = draft.frequence === 'hebdo' ? 'hebdo' : 'jour';
+  const actuel = actifs().find(e => (e.frequence === 'hebdo' ? 'hebdo' : 'jour') === kind);
+  const hebdo = draft.frequence === 'hebdo';
+  return `<h2>Déclarer un engagement</h2>
+  <p class="intro">Une action précise, petite, que tu peux faire même un mauvais jour. Ce qui n'est pas déclaré n'existe pas.</p>
+  <div class="card">
+    <label class="f">Fréquence</label>
+    <div class="seg">${[['quotidien', 'Tous les jours'], ['jours', 'Certains jours'], ['hebdo', 'Chaque semaine']].map(([k, l]) => `<button class="${draft.frequence === k ? 'on' : ''}" onclick="setFreq('${k}')">${l}</button>`).join('')}</div>
+    ${draft.frequence === 'quotidien' ? '' : `<label class="f">${hebdo ? "Le jour où c'est fait au plus tard" : 'Les jours'}</label>
+    <div class="jours">${[1, 2, 3, 4, 5, 6, 7].map(n => `<button class="${draft.jours.includes(n) ? 'on' : ''}" onclick="toggleJour(${n})" aria-label="${JOURS_ISO[n]}">${JOURS_COURT[n]}</button>`).join('')}</div>`}
+    <label class="f">${hebdo ? "L'action que je fais chaque semaine" : "L'action que je fais tous les jours, même 10 minutes"}</label>
+    <input class="inp" id="f-action" value="${esc(draft.action)}" maxlength="160" placeholder="${hebdo ? 'ex. : publier mon post de la semaine' : 'ex. : 20 min de prospection'}">
+    <label class="f">Pourquoi c'est important pour moi</label>
+    <textarea class="inp" id="f-pourquoi" maxlength="300" placeholder="ex. : parce que mes premières clientes ne viendront pas toutes seules">${esc(draft.pourquoi)}</textarea>
+    <label class="f">Ce qui prouve que je l'ai faite <small>(facultatif)</small></label>
+    <input class="inp" id="f-preuve" value="${esc(draft.preuve)}" maxlength="160" placeholder="ex. : 3 lignes dans mon carnet, le message envoyé, la séance donnée">
+    <label class="f">L'heure de mon rappel par mail</label>
+    <div class="quick">${HEURES.map(h => `<button class="${draft.heure === h ? 'on' : ''}" onclick="setHeure(${h})">${h}h</button>`).join('')}</div>
+    <p class="hint">Un mail par ${hebdo ? 'semaine, le jour choisi' : 'jour prévu'}, à cette heure, avec un seul bouton : « C'est fait ».</p>
+    ${actuel ? `<div class="bandeau" style="margin-top:14px">Ton engagement ${hebdo ? 'hebdo' : 'quotidien'} actuel, « <b>${esc(actuel.action)}</b> », passera dans ton historique.</div>` : ''}
+    <div class="act"><button class="btn full lg ink" onclick="declarer()">Je m'engage</button></div>
+  </div>`;
+}
+function bindForm() { ['action', 'pourquoi', 'preuve'].forEach(k => { const el = $('#f-' + k); if (el) el.oninput = () => { draft[k] = el.value; }; }); }
+function setFreq(k) {
+  draft.frequence = k;
+  if (k === 'quotidien') draft.jours = [1, 2, 3, 4, 5, 6, 7];
+  else if (k === 'hebdo') draft.jours = [draft.jours.length === 1 ? draft.jours[0] : 5];
+  else if (draft.jours.length === 7 || draft.jours.length === 1) draft.jours = [1, 2, 3, 4, 5];
+  render();
+}
+function toggleJour(n) {
+  if (draft.frequence === 'hebdo') draft.jours = [n];
+  else draft.jours = draft.jours.includes(n) ? draft.jours.filter(x => x !== n) : draft.jours.concat(n).sort();
+  render();
+}
+function setHeure(h) { draft.heure = h; render(); }
+async function declarer() {
+  if (busy) return;
+  const action = draft.action.trim();
+  if (action.length < 3) return toast('Décris ton action', 'err');
+  if (draft.frequence !== 'quotidien' && !draft.jours.length) return toast('Choisis au moins un jour', 'err');
+  if (!draft.pourquoi.trim()) return toast('Écris pourquoi c\'est important pour toi', 'err');
+  busy = true;
+  try {
+    const r = await api('declare', { prenom: me.prenom, email: me.email, whatsapp: me.whatsapp || '', action, frequence: draft.frequence, jours: draft.jours.join(','), heure: pad(draft.heure) + ':00', pourquoi: draft.pourquoi.trim(), preuve: draft.preuve.trim() });
+    draft = { frequence: 'quotidien', jours: [1, 2, 3, 4, 5, 6, 7], heure: 7, action: '', pourquoi: '', preuve: '' };
+    await load(true);
+    go('today');
+    toast(r.mail ? 'Engagement posé. Un mail de confirmation arrive.' : 'Engagement posé.', 'ok');
+  } catch (err) { toast(err.message, 'err'); }
+  busy = false;
+}
+
+// ---------- modale ----------
+function openSheet(html) { $('#sheet').innerHTML = html; $('#modal').classList.add('on'); }
+function closeModal() { $('#modal').classList.remove('on'); }
+
+// ---------- démarrage ----------
+seedDemo();
+render();
+if (okCode && me) load(); else setStatus(LOCAL ? 'mode test local' : 'prêt', LOCAL ? 'local' : '');
+document.addEventListener('visibilitychange', () => { if (!document.hidden && okCode && me) load(true); });
+setInterval(() => { if (!document.hidden && okCode && me) load(true); }, 120000);
+</script>
+</body>
+</html>
