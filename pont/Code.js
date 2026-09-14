@@ -126,6 +126,7 @@ function doPost(e) {
     if (p.what === 'wh_init') return out(whInit(p));
     if (p.what === 'binome_set') return out(binomeSet(p));
     if (p.what === 'vision_set') return out(visionSet(p));
+    if (p.what === 'programme_set') return out(programmeSet(p));
     if (p.what === 'dev_clear') return out(devClear(p));
     if (p.what === 'setup') return out(setup());
     if (p.what === 'list') return out(list(p));
@@ -728,7 +729,7 @@ function mailSemaine(prenom, email, bilans, t) {
   try { const el = eleveDe(email); bin = el && el.binome ? eleveDe(el.binome) : null; } catch (e) { }
   if (dansProg || bil) lignes.push('bilan du vendredi ' + (bil ? 'fait' : 'pas fait'));
   const choses = [];
-  if (pr && pr.module) choses.push(String(pr.module));
+  if (pr && pr.module) choses.push(String(pr.module) + (pr.note ? ' (' + String(pr.note) + ')' : ''));
   if (dansProg) choses.push(String((pr && pr.call) || SELFTY_CALL_DEFAUT));
   if (prat.length) {
     const c = prat[0], avec = c.email === email ? c.b_prenom : c.prenom;
@@ -867,6 +868,54 @@ const BI_KEYS = ['date', 'semaine', 'email', 'prenom', 'engagement', 'hebdo', 'p
 const PR_TAB = 'Programme';
 const PR_HDR = ['Semaine', 'Du', 'Module de la semaine', 'Selfty Call', 'Note'];
 const PR_KEYS = ['semaine', 'du', 'module', 'call', 'note'];
+// Programme officiel (PDF « Le programme de la Selfty Academy », 09/09/2026) : une ligne par semaine du lundi 12/10/2026 au 12/04/2027.
+// [module de la semaine, note]. Le Selfty Call est la colonne suivante (défaut SELFTY_CALL_DEFAUT, provisoire).
+const PROGRAMME_CONTENU = [
+  ['Module 01 · Vision et posture (ouvert le 10 octobre)', ''],
+  ['Module 02 · Compétences fondamentales', ''],
+  ['Module 03 · Le mental 1.0 : faire la lumière sur notre ombre', ''],
+  ['Semaine d\'intégration, pas de nouveau module', 'Call questions-réponses sur la certification'],
+  ['Module 04 · Le mental 2.0 : le parts work', ''],
+  ['Module 05 · Les émotions et la somatique 1.0', ''],
+  ['Module 06 · Maîtrise du passé', ''],
+  ['Semaine d\'intégration, pas de nouveau module', 'Breathwork optionnel · call questions-réponses sur la certification'],
+  ['Module 07 · Somatique 2.0 : inconscient et science du changement', 'Ouverture du Portail (pratique avec de vraies personnes hors école)'],
+  ['Module 08 · L\'argent et la valeur personnelle', ''],
+  ['Module 09 · Objectifs et action alignée', 'Fin de la Facilitation : examen écrit de certification'],
+  ['Pause de fin d\'année', ''],
+  ['Pause de fin d\'année', ''],
+  ['Module 10 · Le business : orientation globale', ''],
+  ['Module 11 · Vendre en étant au service', ''],
+  ['Module 12 · Ton offre et tes tarifs', ''],
+  ['Semaine d\'intégration, pas de nouveau module', 'Semaine non précisée dans le PDF, à confirmer par Anaïs'],
+  ['Module 13 · Marketing : créer des clients', ''],
+  ['Module 14 · Le business : jouer au jeu de la vie', 'Lancement du 60 jours challenge'],
+  ['Sprint action · 60 jours challenge', ''],
+  ['Sprint action · 60 jours challenge', ''],
+  ['Sprint action · 60 jours challenge', ''],
+  ['Sprint action · 60 jours challenge', 'Dépôt des séances enregistrées pour la certification'],
+  ['Sprint action · 60 jours challenge', ''],
+  ['Sprint action · 60 jours challenge', ''],
+  ['Sprint action · 60 jours challenge', ''],
+  ['Module 15 · Célébration', 'Selfty Call de célébration · certification remise dans les 3 mois'],
+];
+function programmeLignes() {
+  const v = [];
+  for (let k = 1; k <= PROGRAMME_SEMAINES; k++) {
+    const c = PROGRAMME_CONTENU[k - 1] || ['', ''];
+    v.push([String(k), addDays(PROGRAMME_DEBUT, (k - 1) * 7), c[0], SELFTY_CALL_DEFAUT, c[1]]);
+  }
+  return v;
+}
+// console / Alex : réécrit l'onglet Programme depuis PROGRAMME_CONTENU (garde le Selfty Call déjà saisi dans le Sheet)
+function programmeSet(p) {
+  if (!consoleOk(p)) return { ok: false, error: 'bad ckey' };
+  const sh = tab(book(), PR_TAB, PR_HDR);
+  const exist = rows(sh, PR_KEYS);
+  const v = programmeLignes().map(r => { const e = exist.find(x => Number(x.semaine) === Number(r[0])); if (e && e.call && !p.reset_call) r[3] = String(e.call); return r; });
+  sh.getRange(2, 1, v.length, PR_HDR.length).setNumberFormat('@').setValues(v);
+  return { ok: true, semaines: v.length };
+}
 const RS_TAB = 'Résumé semaine';
 const RS_HDR = ['E-mail', 'Prénom', 'Semaine', 'Jours faits', 'Jours prévus', 'Série', 'Action hebdo', 'Hebdo faite', 'Lien portail', 'MAJ'];
 const RS_KEYS = ['email', 'prenom', 'semaine', 'x', 'y', 'serie', 'hebdo', 'hebdo_fait', 'portail', 'updated'];
@@ -877,8 +926,7 @@ function tabsEtape2(ss) {
   tab(ss, RS_TAB, RS_HDR);
   const pr = tab(ss, PR_TAB, PR_HDR);
   if (pr.getLastRow() < 2) {
-    const v = [];
-    for (let k = 1; k <= PROGRAMME_SEMAINES; k++) v.push([k, addDays(PROGRAMME_DEBUT, (k - 1) * 7), '', SELFTY_CALL_DEFAUT, '']);
+    const v = programmeLignes();
     pr.getRange(2, 1, v.length, PR_HDR.length).setNumberFormat('@').setValues(v);
   }
 }
