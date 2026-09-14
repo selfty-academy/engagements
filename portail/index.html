@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ma page · Selfty</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAEEEE">
+<meta name="apple-mobile-web-app-title" content="Ma page Selfty">
+<link rel="icon" href="https://selfty-academy.github.io/console/contrat/favicon-32.png">
+<link rel="apple-touch-icon" href="https://selfty-academy.github.io/console/contrat/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ink:#3A2A2A; --ink-soft:#5C4646; --muted:#8A7070;
+  --paper:#FAEEEE; --surface:#FFFDFB; --card:#F6DFDF; --rose:#F4DDDD; --border:#EBD2D2;
+  --mauve:#966868; --mauve-deep:#7E5252; --lilas:#EAD9EA; --lilas-deep:#6E4A6E;
+  --ok:#4C7A5E; --ok-soft:#E3EEE6; --danger:#A54848; --danger-soft:#F5DCDC;
+  --rate:#D9B4B4; --passe:#E7D9C3; --pause:#B9C8DE; --wa:#1E7A4E;
+  --r:16px; --shadow:0 1px 2px rgba(58,42,42,.06),0 6px 20px rgba(58,42,42,.05);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;padding:0}
+body{background-color:var(--paper);color:var(--ink);font:16px/1.5 "Jost",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(900px 480px at 88% -120px, rgba(150,104,104,.14), transparent 62%),radial-gradient(760px 460px at -8% 12%, rgba(255,253,251,.75), transparent 60%),radial-gradient(680px 420px at 108% 78%, rgba(234,217,234,.55), transparent 62%);
+  background-attachment:fixed}
+a{color:var(--mauve-deep)}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0}
+.wrap{max-width:620px;margin:0 auto;padding:0 16px 48px}
+header{display:flex;align-items:center;gap:12px;padding:16px 0 6px}
+header img{height:34px;width:auto;display:block}
+header .titre{flex:1;min-width:0}
+header h1{font:600 22px/1.1 "Playfair Display",Georgia,serif;margin:0}
+header .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+.sem{display:flex;align-items:center;gap:12px;margin:10px 0 16px}
+.sem .k{font:700 15px "Jost",sans-serif;color:var(--mauve-deep);white-space:nowrap}
+.sem .bar{flex:1;height:8px;border-radius:999px;background:var(--rose);overflow:hidden}
+.sem .bar i{display:block;height:100%;background:var(--mauve);border-radius:999px}
+h2{font:600 19px "Playfair Display",Georgia,serif;margin:22px 0 10px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.vision{background:var(--ink);color:#FFFDFB;border:0;padding:20px 18px}
+.vision .lab{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:#E9CFCF;margin-bottom:8px}
+.vision blockquote{margin:0;font:italic 500 20px/1.4 "Playfair Display",Georgia,serif;white-space:pre-wrap}
+.vision .vide{font-size:14.5px;color:#E9CFCF}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.chip{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;white-space:nowrap}
+.chip.freq{background:var(--rose);color:var(--mauve-deep)}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.attente{background:var(--lilas);color:var(--lilas-deep)}
+.chip.pause{background:#E6EDF6;color:#3F5B7A}
+.chip.alerte{background:var(--danger-soft);color:var(--danger)}
+.action{font:600 20px/1.25 "Playfair Display",Georgia,serif;margin:2px 0 6px}
+.pourquoi{font-size:14px;color:var(--ink-soft);font-style:italic}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--mauve);color:#FFFDFB;border-radius:999px;padding:11px 18px;font:500 15px "Jost",sans-serif;text-decoration:none;border:1px solid var(--mauve)}
+.btn:hover{background:var(--mauve-deep)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.ghost{background:var(--surface);color:var(--ink-soft);border-color:var(--border)}
+.btn.okb{background:var(--ok);border-color:var(--ok)}
+.btn.wa{background:var(--wa);border-color:var(--wa)}
+.btn.sm{padding:8px 13px;font-size:13.5px}
+.btn.lg{padding:14px 20px;font-size:17px;font-weight:600}
+.act{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.act .btn{flex:1}
+.act .btn.sm{flex:none}
+.serie{display:flex;align-items:center;gap:16px}
+.serie .n{font:700 46px/1 "Playfair Display",Georgia,serif;color:var(--mauve-deep)}
+.serie .n small{font:500 14px "Jost",sans-serif;color:var(--ink-soft);margin-left:4px}
+.serie .d{font-size:14px;color:var(--ink-soft);line-height:1.45}
+.serie .d b{color:var(--ink)}
+.g27{margin-top:14px;display:grid;grid-template-columns:34px repeat(7,1fr);gap:3px;align-items:center}
+.g27 .h{font-size:10.5px;color:var(--muted);text-align:center}
+.g27 .w{font-size:10.5px;color:var(--muted);text-align:right;padding-right:4px}
+.g27 i{display:block;height:11px;border-radius:3px;background:#F6EEEE;border:1px solid transparent}
+.g27 i.today{outline:2px solid var(--mauve);outline-offset:1px}
+.p-fait{background:var(--ok)!important}.p-rate{background:var(--rate)!important}.p-passe{background:var(--passe)!important}.p-pause{background:var(--pause)!important}
+.p-attente{background:var(--surface)!important;border-color:var(--mauve)!important}.p-hors{border:1px dashed var(--border)!important}
+.legende{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:10px 2px 0}
+.legende i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.ligne{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.mini{font-size:13px;color:var(--muted)}
+.ok-t{color:var(--ok);font-weight:600}
+.promo-score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 12px}
+.promo-score div{background:var(--card);border-radius:12px;padding:10px;text-align:center}
+.promo-score b{display:block;font:700 22px/1.1 "Playfair Display",Georgia,serif;color:var(--mauve-deep)}
+.promo-score small{font-size:11.5px;color:var(--ink-soft)}
+table.promo{width:100%;border-collapse:collapse;font-size:14.5px}
+table.promo td{padding:7px 4px;border-top:1px solid var(--border)}
+table.promo td.n{text-align:right;white-space:nowrap}
+table.promo tr.moi td{font-weight:600;color:var(--mauve-deep)}
+.switch{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--ink-soft);cursor:pointer}
+.switch input{width:20px;height:20px;accent-color:var(--mauve)}
+.regles{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px 14px 32px;font-size:14px;color:var(--ink-soft);margin:0}
+.regles li{margin:6px 0}
+.etat{padding:40px 16px;text-align:center;color:var(--ink-soft)}
+.etat .big{font-size:36px}
+.modal{position:fixed;inset:0;background:rgba(58,42,42,.42);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.modal.on{display:flex}
+.sheet{background:var(--surface);border-radius:22px 22px 0 0;width:100%;max-width:560px;padding:18px 18px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+@media(min-width:640px){.modal{align-items:center;padding:20px}.sheet{border-radius:22px}}
+.sheet h3{font:600 20px "Playfair Display",Georgia,serif;margin:0 0 4px}
+.fete{text-align:center;padding:8px 0}
+.fete .big{font:700 48px/1 "Playfair Display",Georgia,serif;color:var(--mauve-deep)}
+.fete p{margin:8px 0 0;color:var(--ink-soft)}
+.inp{width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font:16px "Jost",sans-serif;color:var(--ink);background:var(--surface);min-height:46px}
+.quick{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.quick button{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:8px 14px;font-size:14px;color:var(--ink-soft)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(12px);background:var(--ink);color:#FFFDFB;border-radius:999px;padding:11px 18px;font-size:14px;z-index:60;opacity:0;transition:.22s;pointer-events:none;max-width:92vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.toast.err{background:var(--danger)}
+.bandeau{background:var(--lilas);border:1px solid #DCC5DC;border-radius:var(--r);padding:10px 14px;margin:0 0 14px;font-size:13.5px;color:var(--lilas-deep)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="https://selfty-academy.github.io/console/contrat/logo.png" alt="Selfty Academy">
+    <div class="titre"><h1 id="titre">Ma page</h1><div class="sub" id="sub">…</div></div>
+  </header>
+  <div id="app"><div class="etat"><div class="big">🌸</div>Chargement de ta page…</div></div>
+</div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+// Portail perso d'une élève : https://selfty-academy.github.io/engagements/portail/?t=JETON (lien envoyé dans chaque mail).
+// Données : pont Engagements what=portail ; actions : mêmes endpoints que la page Engagements (done, skip, pause, resume) + public_set.
+// Test local sans pont : ?local=1 (données fictives).
+const PONT = 'https://script.google.com/macros/s/AKfycbwROj9t1ce54CnwjVJ7piRzVhqug2eKzyjy8y3BhvpJcKDrXHEIF_YmZQ169cgw1zc/exec';
+const KEY = 'engagements-e1f019f1c9cbf72a9e75b5b8';
+const Q = new URLSearchParams(location.search);
+const LOCAL = Q.get('local') === '1';
+const T = Q.get('t') || (() => { try { return localStorage.getItem('sp_t') || ''; } catch (_) { return ''; } })();
+const JOURS_ISO = ['', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+const PAUSE_MAX = 2;
+let D = null, busy = false;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = n => String(n).padStart(2, '0');
+const isoDate = (d = new Date()) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+function addDays(iso, n) { const d = new Date(String(iso).slice(0, 10) + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+function isoDow(iso) { const d = new Date(String(iso).slice(0, 10) + 'T12:00:00Z').getUTCDay(); return d === 0 ? 7 : d; }
+function weekStart(iso) { return addDays(iso, 1 - isoDow(iso)); }
+const fmtDate = (iso, o) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', o || { weekday: 'long', day: 'numeric', month: 'long' });
+function toast(m, cls) { const t = $('#toast'); t.textContent = m; t.className = 'toast on' + (cls ? ' ' + cls : ''); clearTimeout(t._h); t._h = setTimeout(() => t.className = 'toast', 3000); }
+function openSheet(h) { $('#sheet').innerHTML = h; $('#modal').classList.add('on'); }
+function closeModal() { $('#modal').classList.remove('on'); }
+
+// ---------- calcul des séries (même logique que le pont et la page Engagements) ----------
+function joursSet(e) { if (e.frequence === 'quotidien') return [1, 2, 3, 4, 5, 6, 7]; return String(e.jours || '').split(',').map(Number).filter(n => n >= 1 && n <= 7); }
+function scheduled(e, d) { if (d < e.debut) return false; if (e.fin && d > e.fin) return false; return joursSet(e).includes(isoDow(d)); }
+function calc(e, faits, ref) {
+  const m = {}; const jour = joursSet(e)[0] || 7;
+  faits.forEach(f => { let d = f.date; if (e.frequence === 'hebdo') d = addDays(weekStart(d), jour - 1); if (m[d] === 'oui') return; if (f.fait === 'oui' || !m[d] || (f.fait === 'pause' && m[d] === 'non')) m[d] = f.fait; });
+  const st = d => !scheduled(e, d) ? 'hors' : m[d] === 'oui' ? 'fait' : m[d] === 'pause' ? 'pause' : m[d] === 'non' ? 'passe' : d > ref ? 'avenir' : d === ref ? 'attente' : 'rate';
+  let serie = 0, d, g = 0;
+  if (st(ref) === 'fait') serie++;
+  d = addDays(ref, -1);
+  while (g++ < 400 && d >= e.debut) { const s = st(d); if (s === 'fait') serie++; else if (s === 'rate') break; d = addDays(d, -1); }
+  let record = 0, run = 0, done28 = 0, total28 = 0; const lim = addDays(ref, -27);
+  for (let x = e.debut, i = 0; x <= ref && i < 400; x = addDays(x, 1), i++) { const s = st(x); if (s === 'fait') { run++; record = Math.max(record, run); } else if (s === 'rate') run = 0; if (x >= lim && ['fait', 'rate', 'passe'].includes(s)) { total28++; if (s === 'fait') done28++; } }
+  let manques = 0; d = addDays(ref, -1); g = 0;
+  while (g++ < 400 && d >= e.debut) { const s = st(d); if (s === 'rate') manques++; else if (s !== 'hors' && s !== 'avenir') break; d = addDays(d, -1); }
+  return { serie, record: Math.max(record, serie), manques, done28, total28, today: st(ref), st };
+}
+const unite = (e, n) => e.frequence === 'hebdo' ? (n > 1 ? 'semaines' : 'semaine') : (n > 1 ? 'jours' : 'jour');
+function freqTxt(e) { const j = joursSet(e); if (e.frequence === 'quotidien' || j.length === 7) return 'Tous les jours'; if (e.frequence === 'hebdo') return 'Chaque semaine, au plus tard le ' + JOURS_ISO[j[0] || 7]; return 'Les ' + j.map(n => JOURS_ISO[n]).join(', '); }
+function phraseSerie(n, record, e) {
+  if (n === 0) return "Aujourd'hui, tu commences. Le jour 1 est le seul qui ne dépend que de toi.";
+  if (n >= 30 && e.frequence !== 'hebdo') return "Un mois. Ce n'est plus une action, c'est qui tu es.";
+  if (n === record) return "C'est ton record. Demain, tu le dépasses.";
+  if (n % 7 === 0 && e.frequence !== 'hebdo') return n + ' jours. Une semaine de plus que celle que tu croyais possible.';
+  if (n <= 6) return 'Les premiers ' + unite(e, 2) + ' sont les plus chers. Tiens.';
+  return n + ' ' + unite(e, n) + '. Tu tiens. Continue.';
+}
+
+// ---------- pont ----------
+async function api(what, payload) {
+  if (LOCAL) return localApi(what, payload);
+  const r = await fetch(PONT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ key: KEY, what, ...payload }) });
+  let j; try { j = await r.json(); } catch (_) { throw new Error('le serveur ne répond pas correctement'); }
+  if (!j.ok) throw new Error(j.error || 'erreur');
+  return j;
+}
+function localApi(what, p) {
+  if (!D) D = demo();
+  const t = isoDate();
+  if (what === 'portail') return JSON.parse(JSON.stringify(D));
+  if (what === 'done') { D.faits = D.faits.filter(f => !(f.id === p.id && f.date === (p.d || t))); D.faits.push({ date: p.d || t, id: p.id, fait: 'oui', note: p.note || '' }); return { ok: true }; }
+  if (what === 'skip') { D.faits.push({ date: t, id: p.id, fait: 'non', note: '' }); return { ok: true }; }
+  if (what === 'public_set') { D.public = !!p.public; D.promo.tableau = p.public ? [{ prenom: D.prenom, serie: 9, record: 9, taux: 82 }, { prenom: 'Marc', serie: 4, record: 7, taux: 71 }] : [{ prenom: 'Marc', serie: 4, record: 7, taux: 71 }]; return { ok: true }; }
+  if (what === 'pause' || what === 'resume') return { ok: true };
+  throw new Error('action inconnue');
+}
+function demo() {
+  const t = isoDate();
+  const faits = [];
+  for (let n = 20; n >= 1; n--) if (n !== 12 && n !== 11) faits.push({ date: addDays(t, -n), id: 'd1', fait: n === 6 ? 'non' : 'oui', note: '' });
+  faits.push({ date: addDays(t, -9), id: 'h1', fait: 'oui', note: '' });
+  return { ok: true, today: t, email: 'julia@exemple.fr', prenom: 'Julia', whatsapp: '', vision: 'Accompagner cinq femmes par mois à se sentir enfin à leur place, depuis chez moi, avec des séances qui transforment vraiment.',
+    semaine: 3, semaines: 27, programme_debut: addDays(weekStart(t), -14), module: 'Module 2 · Le corps qui dit oui', call: 'Selfty Call du samedi à 10h',
+    engagements: [
+      { id: 'd1', action: '20 minutes de prospection', frequence: 'quotidien', jours: '1,2,3,4,5,6,7', heure: '08:00', pourquoi: 'Parce que mes premières clientes ne viendront pas toutes seules', preuve: 'le message envoyé', statut: 'actif', pauses: 0, pause_jusqu: '', debut: addDays(t, -20), fin: '' },
+      { id: 'h1', action: 'Une séance de pratique avec ma binôme', frequence: 'hebdo', jours: '5', heure: '18:00', pourquoi: 'Prendre confiance en séance', preuve: '', statut: 'actif', pauses: 0, pause_jusqu: '', debut: addDays(t, -20), fin: '' },
+    ],
+    faits, bilan: { semaine: '2026-W38', fait: false, lien: 'https://tally.so/r/1AekPO' }, intake: { fait: true, lien: 'https://tally.so/r/81X5kk' },
+    binome: { prenom: 'Marc', whatsapp: '33600000000', serie: 4, action: true }, public: false,
+    pratiques: [{ date: addDays(weekStart(t), 3), heure: '12:30', avec: 'Marc' }], pratiques_url: 'https://selfty-academy.github.io/pratiques/',
+    promo: { score: 81, series7: 6, eleves: 11, objectif: 85, tableau: [{ prenom: 'Marc', serie: 4, record: 7, taux: 71 }] } };
+}
+
+// ---------- rendu ----------
+async function load(silent) {
+  if (!T && !LOCAL) { $('#app').innerHTML = `<div class="etat"><div class="big">🔑</div><p>Ta page s'ouvre avec ton lien personnel, celui qui est dans tes mails de rappel.</p><a class="btn" href="../">Aller à mes engagements</a></div>`; $('#sub').textContent = ''; return; }
+  try {
+    D = await api('portail', { t: T });
+    try { if (T) localStorage.setItem('sp_t', T); } catch (_) { }
+    try { localStorage.setItem('se_me', JSON.stringify({ prenom: D.prenom, email: D.email, whatsapp: D.whatsapp || '' })); localStorage.setItem('se_ok', '1'); } catch (_) { }
+    render();
+  } catch (e) {
+    if (!silent) $('#app').innerHTML = `<div class="etat"><div class="big">🌧️</div><p>${esc(e.message === 'lien inconnu' ? 'Ce lien ne correspond à aucune élève. Ouvre le lien de ton dernier mail.' : 'Impossible de charger ta page pour l\'instant. Réessaie dans un moment.')}</p></div>`;
+  }
+}
+function render() {
+  const t = D.today || isoDate();
+  $('#titre').textContent = 'Ma page, ' + D.prenom;
+  const avant = !(D.semaine >= 1);
+  const jAvant = Math.max(0, Math.round((new Date(D.programme_debut + 'T12:00:00') - new Date(t + 'T12:00:00')) / 864e5));
+  $('#sub').textContent = avant ? 'La rentrée arrive' : 'Semaine ' + Math.min(D.semaine, D.semaines) + ' sur ' + D.semaines;
+  const actifs = D.engagements.filter(e => e.statut === 'actif' || e.statut === 'pause').sort((a, b) => (a.frequence === 'hebdo') - (b.frequence === 'hebdo'));
+  const jour = actifs.find(e => e.frequence !== 'hebdo');
+  let h = '';
+  h += `<div class="sem"><span class="k">${avant ? 'J-' + jAvant + ' avant la semaine 1' : 'Semaine ' + Math.min(D.semaine, D.semaines) + ' / ' + D.semaines}</span><span class="bar"><i style="width:${avant ? 0 : Math.round(100 * Math.min(D.semaine, D.semaines) / D.semaines)}%"></i></span></div>`;
+  h += `<div class="card vision"><div class="lab">Ma vision</div>${D.vision ? `<blockquote>${esc(D.vision)}</blockquote>` : `<div class="vide">Ta vision s'affichera ici, en tête de ta page, dès que tu l'auras écrite dans ton questionnaire d'entrée.</div>`}</div>`;
+  if (!D.intake.fait) h += `<div class="card"><div class="action" style="font-size:18px">Ton point de départ</div><p class="mini" style="margin:4px 0 0">Quinze minutes pour dire d'où tu pars et ce qui pourrait te ralentir. Anaïs le lit avant ta première semaine.</p><div class="act"><a class="btn" href="${esc(D.intake.lien)}">Remplir mon questionnaire</a></div></div>`;
+
+  // aujourd'hui
+  h += `<h2>Aujourd'hui</h2>`;
+  if (!actifs.length) h += `<div class="card"><p style="margin:0 0 6px">Aucun engagement pour l'instant. Ce qui n'est pas déclaré n'existe pas.</p><div class="act"><a class="btn" href="../#new">Déclarer mon action</a></div></div>`;
+  actifs.forEach(e => {
+    const f = D.faits.filter(x => x.id === e.id), c = calc(e, f, t), hebdo = e.frequence === 'hebdo';
+    const slot = addDays(weekStart(t), (joursSet(e)[0] || 7) - 1);
+    const faitSem = hebdo && c.st(slot) === 'fait';
+    let etat = '', btn = '';
+    if (e.statut === 'pause') { etat = `<span class="chip pause">en pause jusqu'au ${fmtDate(e.pause_jusqu, { day: 'numeric', month: 'long' })}</span>`; btn = `<button class="btn ghost" onclick="act('resume','${e.id}')">Reprendre maintenant</button>`; }
+    else if (hebdo) { etat = faitSem ? '<span class="chip ok">fait cette semaine ✓</span>' : `<span class="chip attente">à faire avant ${JOURS_ISO[joursSet(e)[0] || 7]}</span>`; btn = faitSem ? `<button class="btn okb" disabled>C'est fait pour cette semaine ✓</button>` : `<button class="btn lg" onclick="fait('${e.id}','${t}')">Fait cette semaine ✓</button>`; }
+    else if (c.today === 'fait') { etat = '<span class="chip ok">fait aujourd\'hui ✓</span>'; btn = `<button class="btn okb" disabled>C'est fait pour aujourd'hui ✓</button>`; }
+    else if (c.today === 'attente') { etat = '<span class="chip attente">à faire aujourd\'hui</span>'; btn = `<button class="btn lg" onclick="fait('${e.id}','${t}')">Fait aujourd'hui ✓</button>`; }
+    else if (c.today === 'passe') { etat = '<span class="chip freq">pas aujourd\'hui</span>'; btn = `<button class="btn ghost" onclick="fait('${e.id}','${t}')">Finalement, c'est fait ✓</button>`; }
+    else etat = '<span class="chip freq">pas prévu aujourd\'hui</span>';
+    if (c.manques >= 2 && e.statut !== 'pause') etat += `<span class="chip alerte">${c.manques} ${unite(e, c.manques)} sans « Fait »</span>`;
+    let second = '';
+    if (e.statut === 'actif' && !hebdo && c.st(addDays(t, -1)) === 'rate') second += `<button class="btn ghost sm" onclick="fait('${e.id}','${addDays(t, -1)}')">Fait hier (avant minuit)</button>`;
+    if (e.statut === 'actif' && c.today === 'attente') second += `<button class="btn ghost sm" onclick="skip('${e.id}')">Pas aujourd'hui</button>`;
+    if (e.statut === 'actif') second += `<button class="btn ghost sm" onclick="pauseSheet('${e.id}')">Pause</button>`;
+    h += `<div class="card"><div class="chips"><span class="chip freq">${esc(freqTxt(e))}</span>${etat}</div>
+      <div class="action">${esc(e.action)}</div>${e.pourquoi ? `<div class="pourquoi">« ${esc(e.pourquoi)} »</div>` : ''}
+      ${btn ? `<div class="act">${btn}</div>` : ''}${second ? `<div class="act">${second}</div>` : ''}</div>`;
+  });
+
+  // ma série + grille 27 semaines
+  if (jour) {
+    const f = D.faits.filter(x => x.id === jour.id), c = calc(jour, f, t);
+    const taux = c.total28 ? Math.round(100 * c.done28 / c.total28) : null;
+    const debutGrille = weekStart(D.programme_debut < jour.debut ? D.programme_debut : weekStart(jour.debut));
+    let g = '<div class="g27"><span></span>' + ['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(x => `<span class="h">${x}</span>`).join('');
+    for (let w = 0; w < D.semaines; w++) {
+      const ws = addDays(debutGrille, w * 7);
+      g += `<span class="w">${w + 1}</span>`;
+      for (let i = 0; i < 7; i++) { const d = addDays(ws, i), s = d > t ? 'avenir' : c.st(d); g += `<i class="p-${s}${d === t ? ' today' : ''}" title="${fmtDate(d, { day: 'numeric', month: 'short' })}"></i>`; }
+    }
+    g += '</div>';
+    h += `<h2>Ma série</h2><div class="card"><div class="serie"><div class="n">${c.serie}<small>${unite(jour, c.serie)}</small></div>
+      <div class="d">${esc(phraseSerie(c.serie, c.record, jour))}<br>record <b>${c.record}</b>${taux !== null ? ` · <b>${taux} %</b> sur 4 semaines` : ''}</div></div>
+      ${g}<div class="legende"><span><i style="background:var(--ok)"></i>fait</span><span><i style="background:var(--rate)"></i>manqué</span><span><i style="background:var(--passe)"></i>pas aujourd'hui</span><span><i style="background:var(--pause)"></i>pause</span><span><i style="background:#F6EEEE"></i>à venir</span></div></div>`;
+  }
+
+  // ma semaine : module, call, pratique
+  const prat = (D.pratiques || []).filter(p => p.date >= t);
+  h += `<h2>Ma semaine</h2><div class="card">
+    ${D.module ? `<div class="ligne"><span>📚 ${esc(D.module)}</span></div>` : ''}
+    ${!avant ? `<div class="ligne" style="margin-top:6px"><span>🎥 ${esc(D.call)}</span></div>` : ''}
+    <div class="ligne" style="margin-top:6px"><span>🤝 ${prat.length ? `Pratique ${esc(fmtDate(prat[0].date))} à ${esc(prat[0].heure.replace(':', 'h'))}${prat[0].avec ? ' avec ' + esc(prat[0].avec) : ''}` : 'Pas encore de pratique cette semaine'}</span><a class="btn ghost sm" href="${esc(D.pratiques_url)}">${prat.length ? 'Agenda' : 'Poser un créneau'}</a></div>
+  </div>`;
+
+  // binôme
+  if (D.binome) {
+    const b = D.binome, prenom = b.prenom || 'ta binôme';
+    const msg = `Hey ${prenom}, je vois que tu es à ${b.serie || 0} ${b.serie > 1 ? 'jours' : 'jour'}, on tient ensemble ?`;
+    h += `<h2>Ma binôme</h2><div class="card"><div class="ligne"><div><div class="action" style="font-size:18px;margin:0">${esc(prenom)}</div><div class="mini">${b.action ? `série en cours : <b>${b.serie || 0}</b>` : 'pas encore d\'engagement déclaré'}</div></div>
+      ${b.whatsapp ? `<a class="btn wa sm" href="https://wa.me/${esc(b.whatsapp)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Lui envoyer un coup de pouce</a>` : ''}</div></div>`;
+  }
+
+  // bilan du vendredi
+  h += `<h2>Mon bilan du vendredi</h2><div class="card"><div class="ligne"><span>${D.bilan.fait ? '<span class="ok-t">✓ Bilan de la semaine rendu</span>' : 'À rendre avant dimanche soir'}</span>${D.bilan.fait ? '' : `<a class="btn" href="${esc(D.bilan.lien)}">Faire mon bilan</a>`}</div><p class="mini" style="margin:8px 0 0">Cinq minutes pour prendre du recul. C'est aussi une condition de la garantie.</p></div>`;
+
+  // promo
+  const P = D.promo || {};
+  h += `<h2>La promo</h2><div class="card"><div class="promo-score"><div><b>${P.score === null || P.score === undefined ? '·' : P.score + ' %'}</b><small>cette semaine</small></div><div><b>${P.series7 || 0}</b><small>séries de 7 jours et plus</small></div><div><b>${P.objectif} %</b><small>objectif de la promo</small></div></div>
+    ${(P.tableau || []).length ? `<table class="promo">${P.tableau.map((x, i) => `<tr class="${D.public && x.prenom === D.prenom ? 'moi' : ''}"><td>${i === 0 ? '🌟 ' : ''}${esc(x.prenom)}</td><td class="n">🔥 ${x.serie}</td><td class="n">record ${x.record}</td><td class="n">${x.taux === null ? '·' : x.taux + ' %'}</td></tr>`).join('')}</table>` : '<p class="mini" style="margin:0">Personne n\'a encore rendu sa série visible.</p>'}
+    <label class="switch" style="margin-top:12px"><input type="checkbox" ${D.public ? 'checked' : ''} onchange="setPublic(this.checked)"> Montrer mon prénom et ma série à la promo</label></div>`;
+
+  h += `<h2>Les règles du jeu</h2><ol class="regles">
+    <li>Un engagement quotidien, un hebdo. Pas plus. Petit et tenu vaut mieux que grand et rêvé.</li>
+    <li>Le « Fait » du jour est valable jusqu'au lendemain minuit.</li>
+    <li>Une pause se déclare avant, 7 jours max, 2 fois sur le programme. Une pause n'est pas une casse.</li>
+    <li>« Pas aujourd'hui » dit à temps ne coûte que le jour ; le silence coûte la série et un message d'Anaïs.</li>
+    <li>À 2 jours de silence, ta binôme puis Anaïs t'écrivent. Ce n'est pas une punition, c'est le contrat.</li>
+    <li>Le bilan du vendredi se rend avant dimanche soir. C'est aussi une condition de la garantie.</li>
+    <li>Tu peux changer d'engagement quand tu veux, en le redéclarant. L'ancien reste dans ton historique.</li>
+    <li>Rien de ce que tu écris n'est montré sans ton accord, sauf ta série si tu as coché « visible ».</li></ol>
+    <div class="act" style="margin-top:18px"><a class="btn ghost" href="../#new">Changer ou déclarer un engagement</a></div>`;
+  $('#app').innerHTML = (LOCAL ? '<div class="bandeau"><b>Mode test local :</b> données fictives, rien n\'est enregistré.</div>' : '') + h;
+}
+
+async function fait(id, d) {
+  if (busy) return; busy = true;
+  try {
+    await api('done', { id, email: D.email, d });
+    await load(true);
+    const e = D.engagements.find(x => x.id === id), c = calc(e, D.faits.filter(x => x.id === id), D.today || isoDate());
+    openSheet(`<div class="fete"><div class="big">${c.serie}</div><p>${esc(phraseSerie(c.serie, c.record, e))}</p></div>
+      <input class="inp" id="note" maxlength="200" placeholder="${esc(e.preuve ? 'Ta preuve : ' + e.preuve : 'Un mot sur aujourd\'hui (facultatif)')}" style="margin-top:12px">
+      <div class="act"><button class="btn ghost" onclick="closeModal()">Plus tard</button><button class="btn" onclick="noter('${id}','${d}')">Noter</button></div>`);
+  } catch (err) { toast(err.message, 'err'); }
+  busy = false;
+}
+async function noter(id, d) { const note = ($('#note').value || '').trim(); closeModal(); if (!note) return; try { await api('done', { id, email: D.email, d, note }); toast('C\'est noté'); } catch (err) { toast(err.message, 'err'); } }
+async function skip(id) { if (!confirm('Pas aujourd\'hui ? Dit à temps, ça ne coûte que le jour : ta série reste.')) return; try { await api('skip', { id, email: D.email }); await load(true); toast('Noté, merci de l\'avoir dit'); } catch (err) { toast(err.message, 'err'); } }
+async function act(what, id, extra) { try { await api(what, { id, email: D.email, ...(extra || {}) }); closeModal(); await load(true); toast(what === 'pause' ? 'Pause posée' : 'Engagement repris'); } catch (err) { toast(err.message, 'err'); } }
+function pauseSheet(id) {
+  const e = D.engagements.find(x => x.id === id), rest = PAUSE_MAX - (Number(e.pauses) || 0);
+  openSheet(`<h3>Mettre en pause</h3><p class="mini">À partir d'aujourd'hui. Une pause déclarée ne casse pas ta série. ${rest > 0 ? 'Il te reste ' + rest + ' pause' + (rest > 1 ? 's' : '') + ' sur ' + PAUSE_MAX + '.' : 'Tu as utilisé tes 2 pauses.'}</p>
+    <div class="quick">${[1, 2, 3, 4, 5, 6, 7].map(n => `<button ${rest <= 0 ? 'disabled' : ''} onclick="act('pause','${id}',{jours:${n}})">${n} j</button>`).join('')}</div>
+    <div class="act"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+}
+async function setPublic(on) { try { await api('public_set', { t: T, public: on }); await load(true); toast(on ? 'Ta série est visible par la promo' : 'Ta série n\'est plus visible'); } catch (err) { toast(err.message, 'err'); } }
+
+load();
+document.addEventListener('visibilitychange', () => { if (!document.hidden && D) load(true); });
+</script>
+</body>
+</html>

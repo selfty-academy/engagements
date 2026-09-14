@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La promo · Selfty</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://selfty-academy.github.io/console/contrat/favicon-32.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{--ink:#3A2A2A;--ink-soft:#5C4646;--muted:#8A7070;--paper:#FAEEEE;--surface:#FFFDFB;--card:#F6DFDF;--border:#EBD2D2;--mauve:#966868;--mauve-deep:#7E5252;--ok:#4C7A5E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:18px/1.5 "Jost",system-ui,sans-serif;min-height:100vh;
+  background-image:radial-gradient(900px 480px at 88% -120px, rgba(150,104,104,.16), transparent 62%),radial-gradient(680px 420px at 0% 100%, rgba(234,217,234,.6), transparent 62%)}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 28px}
+header{display:flex;align-items:center;gap:18px;margin-bottom:26px}
+header img{height:48px}
+header h1{font:700 clamp(28px,4vw,46px)/1.05 "Playfair Display",Georgia,serif;margin:0;flex:1}
+header .sem{font:600 clamp(16px,2vw,22px) "Jost",sans-serif;color:var(--mauve-deep)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:26px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;text-align:center}
+.kpi b{display:block;font:700 clamp(40px,7vw,84px)/1 "Playfair Display",Georgia,serif;color:var(--mauve-deep)}
+.kpi small{font-size:clamp(14px,1.6vw,19px);color:var(--ink-soft)}
+.kpi.ok b{color:var(--ok)}
+.bar{height:14px;border-radius:999px;background:var(--card);overflow:hidden;margin:10px 0 0}
+.bar i{display:block;height:100%;background:var(--mauve)}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;font-size:clamp(17px,2vw,24px)}
+td,th{padding:12px 18px;text-align:left}
+th{font:600 14px "Jost",sans-serif;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+tr+tr td{border-top:1px solid var(--border)}
+td.n{text-align:right;white-space:nowrap}
+tr.top td{font-weight:600;color:var(--mauve-deep)}
+.mot{font:italic 500 clamp(18px,2.2vw,26px) "Playfair Display",Georgia,serif;color:var(--ink-soft);margin:22px 0 0;text-align:center}
+.vide{text-align:center;color:var(--muted);padding:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><img src="https://selfty-academy.github.io/console/contrat/logo.png" alt="Selfty Academy"><h1>La promo</h1><div class="sem" id="sem"></div></header>
+  <div class="kpis" id="kpis"></div>
+  <div id="table"><div class="vide">Chargement…</div></div>
+  <p class="mot" id="mot"></p>
+</div>
+<script>
+// Écran de projection du Selfty Call du lundi (30 secondes) : score de la promo + séries des élèves qui ont choisi d'être visibles.
+// ?local=1 : données fictives.
+const PONT = 'https://script.google.com/macros/s/AKfycbwROj9t1ce54CnwjVJ7piRzVhqug2eKzyjy8y3BhvpJcKDrXHEIF_YmZQ169cgw1zc/exec';
+const KEY = 'engagements-e1f019f1c9cbf72a9e75b5b8';
+const LOCAL = new URLSearchParams(location.search).get('local') === '1';
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+async function load() {
+  let d;
+  try {
+    d = LOCAL ? { ok: true, semaine: 3, semaines: 27, score: 81, series7: 6, eleves: 11, objectif: 85, tableau: [{ prenom: 'Julia', serie: 14, record: 14, taux: 93 }, { prenom: 'Marc', serie: 9, record: 11, taux: 86 }, { prenom: 'Lucile', serie: 4, record: 12, taux: 71 }] }
+      : await (await fetch(PONT + '?key=' + KEY + '&what=promo')).json();
+    if (!d.ok) throw new Error(d.error);
+  } catch (e) { document.getElementById('table').innerHTML = '<div class="vide">Impossible de charger la promo.</div>'; return; }
+  document.getElementById('sem').textContent = d.semaine >= 1 ? 'Semaine ' + Math.min(d.semaine, d.semaines) + ' sur ' + d.semaines : 'Avant la rentrée';
+  const atteint = d.score !== null && d.score >= d.objectif;
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi${atteint ? ' ok' : ''}"><b>${d.score === null ? '·' : d.score + ' %'}</b><small>la promo cette semaine</small><div class="bar"><i style="width:${Math.min(100, d.score || 0)}%"></i></div></div>
+    <div class="kpi"><b>${d.series7}</b><small>séries de 7 jours et plus</small></div>
+    <div class="kpi"><b>${d.objectif} %</b><small>objectif de la promo</small></div>`;
+  document.getElementById('table').innerHTML = d.tableau.length ? `<table><tr><th>Élève</th><th class="n">Série</th><th class="n">Record</th><th class="n">4 semaines</th></tr>${d.tableau.map((x, i) => `<tr class="${i === 0 ? 'top' : ''}"><td>${i === 0 ? '🌟 ' : ''}${esc(x.prenom)}</td><td class="n">🔥 ${x.serie}</td><td class="n">${x.record}</td><td class="n">${x.taux === null ? '·' : x.taux + ' %'}</td></tr>`).join('')}</table>`
+    : '<div class="vide">Aucune élève n\'a encore rendu sa série visible.</div>';
+  document.getElementById('mot').textContent = d.tableau.length ? (atteint ? 'Objectif atteint cette semaine. Le groupe porte le groupe.' : 'Bravo ' + d.tableau[0].prenom + ' pour ta série. Le groupe porte le groupe.') : '';
+}
+load();
+setInterval(load, 120000);
+</script>
+</body>
+</html>
